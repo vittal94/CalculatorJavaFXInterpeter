@@ -33,9 +33,10 @@ interface Expression {
         }
     }
 
-    class Number<T>(private val value: T) : Expression {
+    class Number<T: Any>(private val value: T) : Expression {
         override fun evaluate(): Double {
-            return value as Double
+            return if(isDouble(value)) value as Double
+            else throw NumberFormatException()
         }
     }
 
