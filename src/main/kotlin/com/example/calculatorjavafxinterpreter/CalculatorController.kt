@@ -16,7 +16,6 @@ class CalculatorController {
     private var showHistory = false
     private var number = ""
     private var currentNumber = ""
-    private val historyLog = Stack<String>()
 
     @FXML
     private fun onHistoryButtonClick() {
@@ -118,7 +117,6 @@ class CalculatorController {
             historyListView.items.add(currentNumber)
             labelOut.text = currentNumber
         }
-        println(historyLog)
     }
 
 
@@ -133,8 +131,17 @@ class CalculatorController {
     private fun onDotButtonClick() {
         currentNumber = validateExpression(currentNumber, ".")
         labelOut.text = currentNumber
+    }
 
+    @FXML
+    private fun onClearButtonClick() {
+        historyListView.items.clear()
+    }
 
+    @FXML
+    private fun onModuleButtonClick() {
+        currentNumber = validateExpression(currentNumber, "%")
+        labelOut.text = currentNumber
     }
 
     private fun validateExpression(expr: String, operator: String = ""): String {
@@ -177,10 +184,7 @@ class CalculatorController {
 
     }
 
-    @FXML
-    private fun onClearButtonClick() {
-        historyListView.items.clear()
-    }
+
 
 
 }

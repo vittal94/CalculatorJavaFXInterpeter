@@ -27,7 +27,7 @@
         <Font size="18.0" />
       </font>
     </Button>
-    <Button fx:id="btnPercent" layoutX="14.0" layoutY="108.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="98.0" text="\%">
+    <Button fx:id="btnModule" layoutX="14.0" layoutY="108.0" mnemonicParsing="false" onAction="#onModuleButtonClick" prefHeight="47.0" prefWidth="98.0" text="\%">
       <font>
         <Font size="18.0" />
       </font>
