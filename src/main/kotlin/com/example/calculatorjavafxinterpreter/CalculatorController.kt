@@ -144,11 +144,24 @@ class CalculatorController {
 
     @FXML
     private fun onDotButtonClick() {
-        if(currentNumber.isNotBlank() && currentNumber.last().isDigit()) {
-            currentNumber += "."
-            labelOut.text = currentNumber
-        }
+        currentNumber = validateExpression(currentNumber, ".")
+        labelOut.text = currentNumber
 
+
+    }
+
+    private fun validateExpression(expr: String, operator: String = ""): String {
+        var expression = expr
+
+        if (expression.isBlank() && operator == "-")
+            expression += operator
+        else if (expression.isNotBlank()) {
+            if(expression.last() in listOf('-', '+', '*', '/', '%', '.')) {
+                expression = expression.removeRange(expr.length-1 until expr.length)
+            }
+            expression += operator
+        }
+        return expression
     }
 
 
