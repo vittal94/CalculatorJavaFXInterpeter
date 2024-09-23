@@ -86,46 +86,33 @@ class CalculatorController {
 
     @FXML
     private fun onPlusButtonClick() {
-        if(currentNumber.isNotBlank()) {
-            if(currentNumber.last() in listOf('-', '+', '*', '/', '%')) {
-               currentNumber = currentNumber.removeRange(
-                   currentNumber.length-1 until currentNumber.length)
-            }
-            currentNumber += "+"
-            labelOut.text = currentNumber
-        }
+        currentNumber = validateExpression(currentNumber, "+")
+        labelOut.text = currentNumber
     }
 
     @FXML
     private fun onMinusButtonClick() {
-        currentNumber += "-"
+        currentNumber = validateExpression(currentNumber, "-")
         labelOut.text = currentNumber
     }
 
     @FXML
     private fun onDivideButtonClick() {
-        if(currentNumber.isNotBlank()) {
-            currentNumber += "/"
-            labelOut.text = currentNumber
-        }
+        currentNumber = validateExpression(currentNumber,"/")
+        labelOut.text = currentNumber
     }
 
     @FXML
     private fun onMultiplyButtonClick() {
-        if(currentNumber.isNotBlank()) {
-            currentNumber += "*"
-            labelOut.text = currentNumber
-        }
+        currentNumber = validateExpression(currentNumber,"*")
+        labelOut.text = currentNumber
     }
 
     @FXML
     private fun onEqualsButtonClick() {
+       currentNumber = validateExpression(currentNumber)
+
         if(currentNumber.isNotBlank()) {
-            if(!currentNumber.last().isDigit()) {
-                currentNumber = currentNumber.removeRange(
-                    currentNumber.length-1 until currentNumber.length
-                )
-            }
             historyListView.items.add(currentNumber)
             currentNumber = calculate(currentNumber)
             historyListView.items.add(currentNumber)
@@ -159,10 +146,13 @@ class CalculatorController {
             if(expression.last() in listOf('-', '+', '*', '/', '%', '.')) {
                 expression = expression.removeRange(expr.length-1 until expr.length)
             }
+            //check double dots in number
             expression += operator
         }
         return expression
     }
+
+
 
 
     private fun calculate(expression: String): String {
