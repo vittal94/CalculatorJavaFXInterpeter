@@ -87,6 +87,10 @@ class CalculatorController {
     @FXML
     private fun onPlusButtonClick() {
         if(currentNumber.isNotBlank()) {
+            if(currentNumber.last() in listOf('-', '+', '*', '/', '%')) {
+               currentNumber = currentNumber.removeRange(
+                   currentNumber.length-1 until currentNumber.length)
+            }
             currentNumber += "+"
             labelOut.text = currentNumber
         }
@@ -146,6 +150,7 @@ class CalculatorController {
         }
 
     }
+
 
     private fun calculate(expression: String): String {
         val list = mutableListOf<String>()
