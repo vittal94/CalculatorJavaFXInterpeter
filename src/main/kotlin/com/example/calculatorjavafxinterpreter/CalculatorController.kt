@@ -147,70 +147,25 @@ class CalculatorController {
                 expression = expression.removeRange(expr.length-1 until expr.length)
             }
             //check double dots in number
-            expression += operator
+            if(operator == "." && isDoubleDots(expression))
+                return expression
+
+               expression += operator
         }
         return expression
     }
 
-
-
-
+    private fun isDoubleDots(expr: String): Boolean {
+        for(i in expr.length-1 downTo 0) {
+            val ch = expr[i]
+            if (ch == '.') return true
+            if(ch in listOf('-', '+', '*', '/','%')) return false
+        }
+        return false
+    }
     private fun calculate(expression: String): String {
-        val list = mutableListOf<String>()
-        var acc = ""
-
-        for(i in expression.indices) {
-            val c = expression[i]
-            if (expression.first() == '-' && i == 0) acc += c
-            else if(c.isDigit() || c == '.') {
-                acc += c
-                if(expression.lastIndex == i) list.add(acc)
-            }
-            else
-            {
-                acc.let { if (it.isNotBlank())list.add(it) }
-                acc = ""
-                list.add(c.toString())
-            }
-        }
-        //  println(list)
-        list.reverse()
-
-        for(i in list.size-1 downTo 0) {
-            val str = list[i]
-            if(str in listOf("/", "*")) {
-                val result = str.let {
-                    if(it == "/")
-                        list[i+1].toDouble() / list[i-1].toDouble()
-                    else
-                        list[i+1].toDouble() * list[i-1].toDouble()
-                }
-
-                list.removeAt(i+1)
-                list.removeAt(i)
-                list.add(i,result.toString())
-                list.removeAt(i-1)
-            }
-        }
-
-        // println(list)
-
-        for(i in list.size-1 downTo 0) {
-            val str = list[i]
-            if(str in listOf("-", "+")) {
-                val result = str.let {
-                    if(it == "+")
-                        list[i+1].toDouble() + list[i-1].toDouble()
-                    else
-                        list[i+1].toDouble() - list[i-1].toDouble()
-                }
-                list.removeAt(i+1)
-                list.removeAt(i)
-                list.add(i,result.toString())
-                list.removeAt(i-1)
-            }
-        }
-        return if(list.isNotEmpty()) removeLastDotAndZero(list.first()) else ""
+        val result = Evaluator.evaluate(expression).toString()
+        return if(result.isNotBlank()) removeLastDotAndZero(result) else ""
     }
 
     private fun removeLastDotAndZero(str: String): String {
