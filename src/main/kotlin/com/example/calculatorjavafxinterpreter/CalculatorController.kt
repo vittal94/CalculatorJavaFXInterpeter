@@ -24,64 +24,62 @@ class CalculatorController {
 
     @FXML
     private fun onOneButtonClick() {
-        currentNumber += "1"
+        currentNumber =  validateNumbers(currentNumber, "1")
         labelOut.text = currentNumber
     }
 
     @FXML
     private fun onTwoButtonClick() {
-        currentNumber += "2"
+        currentNumber =  validateNumbers(currentNumber, "2")
         labelOut.text = currentNumber
     }
 
     @FXML
     private fun onThreeButtonClick() {
-        currentNumber += "3"
+        currentNumber =  validateNumbers(currentNumber, "3")
         labelOut.text = currentNumber
     }
 
     @FXML
     private fun onFourButtonClick() {
-        currentNumber += "4"
+        currentNumber =  validateNumbers(currentNumber, "4")
         labelOut.text = currentNumber
     }
 
     @FXML
     private fun onFiveButtonClick() {
-        currentNumber += "5"
+        currentNumber =  validateNumbers(currentNumber, "5")
         labelOut.text = currentNumber
     }
 
     @FXML
     private fun onSixButtonClick() {
-        currentNumber += "6"
+        currentNumber =  validateNumbers(currentNumber, "6")
         labelOut.text = currentNumber
     }
 
     @FXML
     private fun onSevenButtonClick() {
-        currentNumber += "7"
+        currentNumber = validateNumbers(currentNumber, "7")
         labelOut.text = currentNumber
     }
 
     @FXML
     private fun onEightButtonClick() {
-        currentNumber += "8"
+        currentNumber = validateNumbers(currentNumber, "8")
         labelOut.text = currentNumber
     }
 
     @FXML
     private fun onNineButtonClick() {
-        currentNumber += "9"
+        currentNumber = validateNumbers(currentNumber, "9")
         labelOut.text = currentNumber
     }
 
     @FXML
     private fun onZeroButtonClick() {
-        if(currentNumber !in listOf("-0", "0")) {
-            currentNumber += "0"
-            labelOut.text = currentNumber
-        }
+        currentNumber = validateNumbers(currentNumber, "0")
+        labelOut.text = currentNumber
     }
 
     @FXML
@@ -174,13 +172,16 @@ class CalculatorController {
 
     private fun validateNumbers(expr: String, number: String): String {
         var expression = expr
-
-        if (expression !in listOf("-0", "0")) {
-            expression += number
-            return expression
+        val size = expression.length
+        if(expression.isNotBlank()) {
+            if(expression in listOf("-0", "0") ||
+                (size > 1 && expression.last() == '0' && expression[size-2] in listOf('-', '+', '*', '/', '%'))) {
+                expression = expression.removeRange(size-1 until size)
+            }
         }
+        expression += number
 
-        return number
+        return expression
     }
 
     private fun isDoubleDots(expr: String): Boolean {
@@ -204,8 +205,4 @@ class CalculatorController {
         }
 
     }
-
-
-
-
 }
