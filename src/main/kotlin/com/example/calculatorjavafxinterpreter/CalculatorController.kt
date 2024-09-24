@@ -14,7 +14,6 @@ class CalculatorController {
     @FXML
     private lateinit var historyListView: ListView<String>
     private var showHistory = false
-    private var number = ""
     private var currentNumber = ""
 
     @FXML
