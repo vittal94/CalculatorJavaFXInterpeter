@@ -79,8 +79,10 @@ class CalculatorController {
 
     @FXML
     private fun onZeroButtonClick() {
-        currentNumber += "0"
-        labelOut.text = currentNumber
+        if(currentNumber !in listOf("-0", "0")) {
+            currentNumber += "0"
+            labelOut.text = currentNumber
+        }
     }
 
     @FXML
@@ -144,6 +146,15 @@ class CalculatorController {
         labelOut.text = currentNumber
     }
 
+    @FXML
+    private fun onRemoveButtonClick() {
+        if(currentNumber.isNotBlank()) {
+            currentNumber = currentNumber.removeRange(
+            currentNumber.length-1 until currentNumber.length)
+            labelOut.text = currentNumber
+        }
+    }
+
     private fun validateExpression(expr: String, operator: String = ""): String {
         var expression = expr
 
@@ -160,6 +171,17 @@ class CalculatorController {
                expression += operator
         }
         return expression
+    }
+
+    private fun validateNumbers(expr: String, number: String): String {
+        var expression = expr
+
+        if (expression !in listOf("-0", "0")) {
+            expression += number
+            return expression
+        }
+
+        return number
     }
 
     private fun isDoubleDots(expr: String): Boolean {
