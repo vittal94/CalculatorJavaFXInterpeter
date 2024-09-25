@@ -121,7 +121,6 @@ class CalculatorController {
 
     @FXML
     private fun onCButtonClick() {
-        number = ""
         currentNumber = ""
         labelOut.text = currentNumber
     }
