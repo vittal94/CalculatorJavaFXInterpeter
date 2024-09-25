@@ -151,6 +151,7 @@ class CalculatorController {
         }
     }
 
+    //checks correctness of the expression
     private fun validateExpression(expr: String, operator: String = ""): String {
         var expression = expr
 
@@ -169,6 +170,7 @@ class CalculatorController {
         return expression
     }
 
+    //checks correctness of the numbers in expression
     private fun validateNumbers(expr: String, number: String): String {
         var expression = expr
         val size = expression.length
@@ -196,6 +198,7 @@ class CalculatorController {
         return if(result.isNotBlank()) removeLastDotAndZero(result) else ""
     }
 
+    //if the answer contains numbers like 2.0, 45.0 it removes the dot and zero from the answer
     private fun removeLastDotAndZero(str: String): String {
         return str.run {
             if (last() == '0' && this[length-2] == '.')
